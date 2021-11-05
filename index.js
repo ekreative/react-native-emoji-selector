@@ -74,7 +74,7 @@ const emojiByCategory = (category) =>
 const sortEmoji = (list) => list.sort((a, b) => a.sort_order - b.sort_order);
 const categoryKeys = Object.keys(Categories);
 
-const TabBar = ({ theme, activeCategory, onPress, width, styles }) => {
+const TabBar = ({ theme, activeCategory, onPress, width, inActiveTabBorderColor, styles }) => {
   const categories = Object.keys(Categories);
   const tabSize = Math.min(width / categories.length, 56);
   const colorScheme = useColorScheme();
@@ -93,9 +93,7 @@ const TabBar = ({ theme, activeCategory, onPress, width, styles }) => {
               borderColor:
                 category === activeCategory
                   ? theme
-                  : colorScheme === "light"
-                  ? PlatformColor("systemGray5")
-                  : PlatformColor("systemGray4") /*TODO: Android */,
+                  : inActiveTabBorderColor,
             },
             styles.tab,
           ]}
@@ -191,12 +189,14 @@ const EmojiSelector = ({
   category,
   columns,
   placeholder,
+  placeholderTextColor,
   showHistory,
   showSearchBar,
   showSectionTitles,
   showTabs,
   onEmojiSelected,
   shouldInclude,
+  inActiveTabBorderColor,
   overrideStyles = {},
   ...other
 }) => {
@@ -344,6 +344,7 @@ const EmojiSelector = ({
       <View style={styles.tabBar}>
         {showTabs && (
           <TabBar
+            inActiveTabBorderColor={inActiveTabBorderColor}
             activeCategory={state.category}
             onPress={handleTabSelect}
             theme={theme}
@@ -356,6 +357,7 @@ const EmojiSelector = ({
         {showSearchBar && (
           <View style={styles.searchContainer}>
             <TextInput
+              placeholderTextColor={placeholderTextColor}
               style={styles.search}
               placeholder={placeholder}
               clearButtonMode="always"
@@ -412,6 +414,8 @@ EmojiSelector.defaultProps = {
   showSectionTitles: true,
   columns: 6,
   placeholder: "Search...",
+  placeholderTextColor: 'red',
+  inActiveTabBorderColor: 'red',
 };
 
 export const defaultStyles = StyleSheet.create({
