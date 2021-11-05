@@ -35,6 +35,8 @@ declare module "react-native-emoji-selector" {
     category?: Categories;
     columns?: number;
     shouldInclude?: (e: any)=>boolean;
+    inActiveTabBorderColor: string;
+    placeholderTextColor: string;
   }
 
   const EmojiSelector: React.ComponentType<EmojiSelectorProps>;
